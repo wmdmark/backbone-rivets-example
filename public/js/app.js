@@ -91,8 +91,8 @@
   globals.require.brunch = true;
 })();
 require.register("example", function(exports, require, module) {
-"The Rivets adaptor for Backbone models. \nSee docs on adaptors here: http://www.rivetsjs.com/docs/#adapters";
-var ContactFormView, ContactModel, ContactView, _ref, _ref1, _ref2,
+"The Rivets adaptor for Backbone models. \nSee docs on adaptors here: http://www.rivetsjs.com/docs/#adapters\nThis is a very simple Backbone adaptor. \nFor more advanced binding check out: \nhttps://github.com/azproduction/rivets-backbone-adapter";
+var BoundView, ContactFormView, ContactModel, ContactView, DebugView, sampleData, _ref, _ref1, _ref2, _ref3, _ref4,
   __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -110,12 +110,6 @@ rivets.adapters[':'] = {
   publish: function(obj, keypath, value) {
     return obj.set(keypath, value);
   }
-};
-
-"Custom Rivets formatter to replace text line breaks with <br>s\nSee formatter docs here: http://www.rivetsjs.com/docs/#formatters";
-
-rivets.formatters.linebreaksbr = function(value) {
-  return value.replace(/\n/g, '<br>');
 };
 
 "The Backbone Model and Views for our example.\nNormally these would be split into their own files but\nfor examples sake we're combinding everything here.";
@@ -136,22 +130,17 @@ ContactModel = (function(_super) {
       first_name: "",
       last_name: "",
       short_bio: "",
-      links: {
-        github: "",
-        twitter: "",
-        website: ""
-      }
+      github: "",
+      twitter: "",
+      website: ""
     };
   };
 
   ContactModel.prototype.getGravatar = function() {
-    var baseURL, imgPath;
     if (!this.get("email")) {
       return "";
     }
-    baseURL = "http://www.gravatar.com/avatar/";
-    imgPath = hex_md5(this.get('email'));
-    return "" + baseURL + "/" + imgPath;
+    return "http://www.gravatar.com/avatar/" + (hex_md5(this.get('email')));
   };
 
   ContactModel.prototype.getFullName = function() {
@@ -168,92 +157,162 @@ ContactModel = (function(_super) {
 
 })(Backbone.Model);
 
+sampleData = require('sample-data');
+
+BoundView = (function(_super) {
+  __extends(BoundView, _super);
+
+  function BoundView() {
+    _ref1 = BoundView.__super__.constructor.apply(this, arguments);
+    return _ref1;
+  }
+
+  BoundView.prototype.render = function() {
+    BoundView.__super__.render.call(this);
+    this.bindingView = rivets.bind(this.el, {
+      model: this.model,
+      view: this
+    });
+    return this;
+  };
+
+  BoundView.prototype.remove = function() {
+    this.bindingView.unbind();
+    return BoundView.__super__.remove.call(this);
+  };
+
+  return BoundView;
+
+})(Backbone.View);
+
 ContactFormView = (function(_super) {
   __extends(ContactFormView, _super);
 
   function ContactFormView() {
-    this.loadSample = __bind(this.loadSample, this);
-    _ref1 = ContactFormView.__super__.constructor.apply(this, arguments);
-    return _ref1;
+    _ref2 = ContactFormView.__super__.constructor.apply(this, arguments);
+    return _ref2;
   }
 
   ContactFormView.prototype.el = "#contact-form-view";
 
-  ContactFormView.prototype.events = {
-    "keyup textarea": function(e) {
-      return $(e.currentTarget).trigger("change");
-    }
-  };
-
-  ContactFormView.prototype.render = function() {
-    return this.bindingView = rivets.bind(this.el, {
-      contact: this.model,
-      view: this
-    });
-  };
-
-  ContactFormView.prototype.remove = function() {
-    this.bindingView.unbind();
-    return ContactFormView.__super__.remove.call(this);
-  };
-
-  ContactFormView.prototype.loadSample = function() {
-    this.model.set({
-      first_name: "Mark",
-      last_name: "Johnson",
-      short_bio: "Web designer, developer and teacher. Co-founder of Pathwright",
-      email: "wmdmark@gmail.com",
-      links: {
-        twitter: "http://twitter.com/wmdmark",
-        github: "http://github.com/wmdmark",
-        website: "http://pathwright.com"
-      }
-    });
-    return false;
-  };
-
   return ContactFormView;
 
-})(Backbone.View);
+})(BoundView);
 
 ContactView = (function(_super) {
   __extends(ContactView, _super);
 
   function ContactView() {
-    _ref2 = ContactView.__super__.constructor.apply(this, arguments);
-    return _ref2;
+    _ref3 = ContactView.__super__.constructor.apply(this, arguments);
+    return _ref3;
   }
 
   ContactView.prototype.el = "#contact-view";
 
-  ContactView.prototype.render = function() {
-    this.bindingView = rivets.bind(this.el, {
-      contact: this.model
-    });
-    return this;
-  };
-
-  ContactView.prototype.remove = function() {
-    this.bindingView.unbind();
-    return ContactView.__super__.remove.call(this);
-  };
-
   return ContactView;
 
-})(Backbone.View);
+})(BoundView);
+
+DebugView = (function(_super) {
+  __extends(DebugView, _super);
+
+  function DebugView() {
+    _ref4 = DebugView.__super__.constructor.apply(this, arguments);
+    return _ref4;
+  }
+
+  DebugView.prototype.el = "#debug-view";
+
+  DebugView.prototype.sampleData = require("sample-data");
+
+  DebugView.prototype.events = {
+    "click a.btn": function(e) {
+      var sample;
+      sampleData = sample = $(e.currentTarget).data().sample;
+      this.watched.clear({
+        silent: true
+      });
+      console.log("setting: ", this.sampleData[sample]);
+      return this.watched.set(this.sampleData[sample]);
+    }
+  };
+
+  DebugView.prototype.initialize = function(options) {
+    if (this.model == null) {
+      this.model = new Backbone.Model();
+    }
+    this.watched = options.watch;
+    this._setWatchedModelJSON();
+    return this.listenTo(this.watched, "change", this._setWatchedModelJSON);
+  };
+
+  DebugView.prototype._setWatchedModelJSON = function() {
+    var json;
+    json = JSON.stringify(this.watched.toJSON(), null, '  ');
+    return this.model.set("modelJSON", json);
+  };
+
+  return DebugView;
+
+})(BoundView);
+
+"Custom Rivets formatter to replace text line breaks with <br>s\nSee formatter docs here: http://www.rivetsjs.com/docs/#formatters";
+
+rivets.formatters.linebreaksbr = function(value) {
+  return value.replace(/\n/g, '<br>');
+};
+
+"Custom Rivets binder to update value bindings \"live\" (onkeyup)\nBindings documentation here: http://www.rivetsjs.com/docs/#binders";
+
+rivets.binders['live-value'] = {
+  publishes: true,
+  bind: function(el) {
+    return $(el).on('keyup', this.publish);
+  },
+  unbind: function(el) {
+    return $(el).off('keyup', this.publish);
+  },
+  routine: function(el, value) {
+    return rivets.binders.value.routine(el, value);
+  }
+};
 
 $(function() {
   window.contactModel = new ContactModel();
-  contactModel.on("change", function() {
-    return console.log(this.attributes);
-  });
   new ContactFormView({
     model: contactModel
   }).render();
-  return new ContactView({
+  new ContactView({
     model: contactModel
   }).render();
+  return new DebugView({
+    watch: contactModel
+  }).render();
 });
+
+});
+
+;require.register("sample-data", function(exports, require, module) {
+module.exports = {
+  mark: {
+    first_name: "Mark",
+    last_name: "Johnson",
+    short_bio: "Web designer, developer and teacher. Co-founder of Pathwright",
+    email: "wmdmark@gmail.com",
+    twitter: "http://twitter.com/wmdmark",
+    github: "http://github.com/wmdmark",
+    website: "http://pathwright.com"
+  },
+  mason: {
+    first_name: "Mason",
+    last_name: "Stewart",
+    short_bio: "Frontender, JavaScripter, & Lisper",
+    email: "mason@theironyard.com",
+    twitter: "http://twitter.com/masondesu",
+    github: "https://github.com/masondesu",
+    website: ""
+  }
+};
 
 });
 

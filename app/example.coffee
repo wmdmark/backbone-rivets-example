@@ -1,6 +1,9 @@
 """
 The Rivets adaptor for Backbone models. 
 See docs on adaptors here: http://www.rivetsjs.com/docs/#adapters
+This is a very simple Backbone adaptor. 
+For more advanced binding check out: 
+https://github.com/azproduction/rivets-backbone-adapter
 """
 rivets.adapters[':'] =
   
@@ -21,14 +24,6 @@ rivets.adapters[':'] =
     # Write a value to a model based on a watched key
     obj.set keypath, value
 
-"""
-Custom Rivets formatter to replace text line breaks with <br>s
-See formatter docs here: http://www.rivetsjs.com/docs/#formatters
-"""
-rivets.formatters.linebreaksbr = (value)->
-  return value.replace(/\n/g, '<br>')
-
-
 
 """
 The Backbone Model and Views for our example.
@@ -43,16 +38,13 @@ class ContactModel extends Backbone.Model
     first_name: ""
     last_name: ""
     short_bio: ""
-    links:
-      github: ""
-      twitter: ""
-      website: ""
+    github: ""
+    twitter: ""
+    website: ""
 
   getGravatar: ->
       return "" if not @get("email")
-      baseURL = "http://www.gravatar.com/avatar/"
-      imgPath = hex_md5(@get('email'))
-      "#{baseURL}/#{imgPath}"
+      "http://www.gravatar.com/avatar/#{hex_md5(@get('email'))}"
 
   getFullName: -> 
     "#{@get('first_name')} #{@get('last_name')}"
@@ -61,56 +53,72 @@ class ContactModel extends Backbone.Model
     vs = _.uniq(_.values(@get("links")))
     !(vs.length is 1 and vs[0] is "")
 
-class ContactFormView extends Backbone.View
 
-  el: "#contact-form-view"
+sampleData = require('sample-data')
 
-  events:
-    "keyup textarea": (e)-> 
-      $(e.currentTarget).trigger("change")
+
+class BoundView extends Backbone.View
 
   render: ->
-    # Normally you'd render a template here
-    # but for this example the HTML is already in the DOM
-    @bindingView = rivets.bind(@el, contact: @model, view: @)
-
-  remove: ->
-    # Need to unbind rivets first
-    @bindingView.unbind()
     super()
-
-  loadSample: =>
-    @model.set
-      first_name: "Mark"
-      last_name: "Johnson"
-      short_bio: "Web designer, developer and teacher. Co-founder of Pathwright"
-      email: "wmdmark@gmail.com"
-      links:
-        twitter: "http://twitter.com/wmdmark"
-        github: "http://github.com/wmdmark"
-        website: "http://pathwright.com"
-    return false
-
-
-class ContactView extends Backbone.View
-
-  el: "#contact-view"
-
-  render: ->
-    # Normally you'd render a template here
-    # but for this example the HTML is already in the DOM
-    @bindingView = rivets.bind(@el, contact: @model)
+    @bindingView = rivets.bind(@el, model: @model, view: @)
     @
 
   remove: ->
-    # Need to unbind rivets first
     @bindingView.unbind()
     super()
+    
+
+class ContactFormView extends BoundView
+  el: "#contact-form-view"
+
+class ContactView extends BoundView
+  el: "#contact-view"
+
+class DebugView extends BoundView
+  el: "#debug-view"
+  sampleData: require("sample-data")
+  events:
+    "click a.btn": (e)->
+      sampleData = 
+      sample = $(e.currentTarget).data().sample
+      @watched.clear(silent:yes)
+      console.log "setting: ", @sampleData[sample]
+      @watched.set(@sampleData[sample])
+
+  initialize: (options)->
+    @model ?= new Backbone.Model()
+    @watched = options.watch
+    @_setWatchedModelJSON()
+    @listenTo @watched, "change", @_setWatchedModelJSON
+
+  _setWatchedModelJSON: ->
+    json = JSON.stringify(@watched.toJSON(), null, '  ')
+    @model.set("modelJSON", json)
+
+
+"""
+Custom Rivets formatter to replace text line breaks with <br>s
+See formatter docs here: http://www.rivetsjs.com/docs/#formatters
+"""
+rivets.formatters.linebreaksbr = (value)->
+  return value.replace(/\n/g, '<br>')
+
+"""
+Custom Rivets binder to update value bindings "live" (onkeyup)
+Bindings documentation here: http://www.rivetsjs.com/docs/#binders
+"""
+rivets.binders['live-value'] =
+  publishes: true
+  bind: (el) -> $(el).on 'keyup', @publish
+  unbind: (el) -> $(el).off 'keyup', @publish
+  routine: (el, value) -> rivets.binders.value.routine(el, value)
 
 
 $ ->
   window.contactModel = new ContactModel()
-  contactModel.on "change", -> 
-    console.log(@attributes)
   new ContactFormView(model: contactModel).render()
   new ContactView(model: contactModel).render()
+  new DebugView(watch: contactModel).render()
+
+  

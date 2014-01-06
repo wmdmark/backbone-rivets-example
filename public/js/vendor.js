@@ -12780,7 +12780,7 @@ if("undefined"==typeof jQuery)throw new Error("Bootstrap requires jQuery");+func
         });
     }
   };
-  var port = ar.port || 9486;
+  var port = ar.port || 9485;
   var host = (!br['server']) ? window.location.hostname : br['server'];
   var connect = function(){
     var connection = new WebSocket('ws://' + host + ':' + port);

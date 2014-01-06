@@ -19,31 +19,28 @@
 
         <!-- ContactFormView -->
         <form id="contact-form-view" role="form" class="col-xs-6">
-          <div class="form-group">
-            <button class="btn btn-primary" rv-on-click="view.loadSample">Load Sample Data</button>
-          </div>
           <div class="form-group row">
             <div class="col-xs-6">
-              <input type="text" class="form-control" placeholder="First name" rv-value="contact:first_name">
+              <input type="text" class="form-control" placeholder="First name" rv-value="model:first_name">
             </div>
             <div class="col-xs-6">
-              <input type="text" class="form-control" placeholder="Last name" rv-value="contact:last_name">
+              <input type="text" class="form-control" placeholder="Last name" rv-value="model:last_name">
             </div>
           </div>
           <div class="form-group">
-            <textarea class="form-control" rows="3" placeholder="Short bio" rv-value="contact:short_bio"></textarea>
+            <textarea class="form-control" rows="3" placeholder="Short bio" rv-live-value="model:short_bio"></textarea>
           </div>
           <div class="form-group">
-            <input type="email" class="form-control" placeholder="Email address" rv-value="contact:email">
+            <input type="email" class="form-control" placeholder="Email address" rv-value="model:email">
           </div>
           <div class="form-group">
-            <input type="text" class="form-control" placeholder="Twitter" rv-value="contact:links.twitter">
+            <input type="text" class="form-control" placeholder="Twitter" rv-value="model:twitter">
           </div>
           <div class="form-group">
-            <input type="text" class="form-control" placeholder="Github" rv-value="contact:links.github">
+            <input type="text" class="form-control" placeholder="Github" rv-value="model:github">
           </div>
           <div class="form-group">
-            <input type="text" class="form-control" placeholder="Website" rv-value="contact:links.website">
+            <input type="text" class="form-control" placeholder="Website" rv-value="model:website">
           </div>
         </form>
         
@@ -51,29 +48,42 @@
         <div class="col-xs-6">
           <div id="contact-view">
             <div class="info">
-              <img rv-src="contact.getGravatar < :email"></img>
-              <h1>{ contact.getFullName < :first_name :last_name }</h1>
-              <p rv-html="contact:short_bio | linebreaksbr"></p>
+              <!-- Rivets note: computed property (triggered by email change) -->
+              <img rv-src="model.getGravatar < :email"></img>
+              <!-- Rivets note: computed property (triggered by :first_name :last_name change) -->
+              <h1>{ model.getFullName < :first_name :last_name }</h1>
+              <p rv-html="model:short_bio | linebreaksbr"></p>
             </div>
-            <ul class="links" 
-              rv-show="contact.hasLinks < :links.github :links.twitter :links.website">
-              <li rv-show="contact:links.github">
-                <a rv-href="contact:links.github">
+            <ul class="links">
+              <li rv-show="model:github">
+                <a rv-href="model:github">
                   <i class="fa fa-github"></i>
                 </a>
               </li>
-              <li rv-show="contact:links.twitter">
-                <a rv-href="contact:links.twitter"><i class="fa fa-twitter"></i></a>
+              <li rv-show="model:twitter">
+                <a rv-href="model:twitter"><i class="fa fa-twitter"></i></a>
               </li>
-              <li rv-show="contact:links.website">
-                <a rv-href="contact:links.website"><i class="fa fa-link"></i></a>
+              <li rv-show="model:website">
+                <a rv-href="model:website"><i class="fa fa-link"></i></a>
               </li>
             <ul>
           </div>
         </div>
-
       </div>
+
+      <!-- DebugView -->
+      <div id="debug-view">
+        <header>
+          <strong>Load sample data: </strong>
+          <a href="javascript:void(0);" class="btn btn-link" data-sample="mark">Mark</a>
+          <a href="javascript:void(0);" class="btn btn-link" data-sample="mason">Mason</a>
+        </header>
+        <pre><code rv-text="model:modelJSON"></code></pre>
+      </div>
+
     </div>
+
+
 
     <!-- js assets built with Brunch -->
     <script src="js/vendor.js"></script>
