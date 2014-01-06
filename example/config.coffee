@@ -1,39 +1,21 @@
 exports.config =
-  sourceMaps: false
-  conventions:
-    assets: /^example\/app\/assets\//
-
-  paths:
-    public: 'example/dist'
-    watched: ['example']
-
+  # See docs at https://github.com/brunch/brunch/blob/stable/docs/config.md
   files:
     javascripts:
+      defaultExtension: 'coffee'
       joinTo:
-        'js/app.js': /^example\/app/
-        'js/vendor.js':  /^example\/(bower_components|vendor)/
+        'js/app.js': /^example/
+        'js/vendor.js': /^vendor/
       order:
         before: [
-          'example/vendor/scripts/jquery-1.10.2.min.js', 
-          'example/vendor/scripts/underscore-min.js', 
-          'example/vendor/scripts/backbone-min.js',
-        ]
-
+          'vendor/scripts/jquery.js'
+          'vendor/scripts/underscore.js'
+          'vendor/scripts/backbone.js'
+          'vendor/scripts/bootstrap.min.js'
+          'vendor/scripts/rivets.min.js'
     stylesheets:
       joinTo:
-          'css/app.css': /^example\/app/
-          'css/vendor.css': /^example\/(bower_components|vendor)/
-
+        'css/app.css': /^app(\/|\\)views(\/|\\)styles(\/|\\)/
+        'css/vendor.css': /^vendor(\/|\\)styles/
     templates:
       joinTo: 'js/app.js'
-
-  overrides:
-    production:
-      optimize: true
-      sourceMaps: false
-      plugins: autoReload: enabled: false
-
-  modules:
-    nameCleaner: (path) ->
-      cleanPath = path.replace(/^example\//, '')
-      cleanPath.replace(/^app\//, '')
