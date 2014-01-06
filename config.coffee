@@ -20,3 +20,8 @@ exports.config =
         'css/vendor.css': /^vendor(\/|\\)styles/
     templates:
       joinTo: 'js/app.js'
+  overrides:
+    production:
+      optimize: true
+      sourceMaps: false
+      plugins: autoReload: enabled: false      
