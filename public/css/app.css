@@ -3,7 +3,19 @@ body {
   font-weight: 400;
   background-color: #f3f3f3; }
   body h1, body h2, body h3 {
-    font-family: 'Open Sans', sans-serif !important; }
+    font-weight: 300;
+    font-family: 'Open Sans', sans-serif !important;
+    text-align: center; }
+  body h3 {
+    color: #999; }
+  body header {
+    text-align: center; }
+    body header p {
+      color: #999; }
+  body footer {
+    margin-top: 40px;
+    text-align: center;
+    color: #999; }
 
 #contact-view {
   background-color: #fff;
@@ -20,6 +32,10 @@ body {
     font-weight: 300; }
   #contact-view .info {
     padding: 20px; }
+    #contact-view .info p {
+      font-weight: 300;
+      color: #666;
+      font-size: 1.3em; }
   #contact-view ul.links {
     position: absolute;
     bottom: 0px;
