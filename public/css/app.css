@@ -1,0 +1,25 @@
+#contact-view {
+  text-align: center;
+  border: 1px solid #ddd;
+  min-height: 200px; }
+  #contact-view .info {
+    padding: 20px; }
+  #contact-view ul.links {
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+    background-color: #ddd;
+    padding: 10px 0px; }
+    #contact-view ul.links li {
+      display: inline;
+      margin-left: 10px; }
+      #contact-view ul.links li a {
+        color: #999; }
+        #contact-view ul.links li a i {
+          font-size: 2em; }
+        #contact-view ul.links li a:hover {
+          color: #333; }
+
+
+/*# sourceMappingURL=app.css.map*/

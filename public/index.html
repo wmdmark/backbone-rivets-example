@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Backbone.js + Rivets.js Example</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <!-- css assets built with Brunch -->
+    <link href="css/vendor.css" rel="stylesheet">
+    <link href="css/app.css" rel="stylesheet">
+  </head>
+  <body>
+
+    <div class="container">
+      <header class="page-header">
+        <h1>Contact Form Demo</h1>
+      </header>
+      <div class="row">
+
+        <!-- ContactFormView -->
+        <form id="contact-form-view" role="form" class="col-xs-6">
+          <div class="form-group">
+            <button class="btn btn-primary" rv-on-click="view.loadSample">Load Sample Data</button>
+          </div>
+          <div class="form-group row">
+            <div class="col-xs-6">
+              <input type="text" class="form-control" placeholder="First name" rv-value="contact:first_name">
+            </div>
+            <div class="col-xs-6">
+              <input type="text" class="form-control" placeholder="Last name" rv-value="contact:last_name">
+            </div>
+          </div>
+          <div class="form-group">
+            <textarea class="form-control" rows="3" placeholder="Short bio" rv-value="contact:short_bio"></textarea>
+          </div>
+          <div class="form-group">
+            <input type="email" class="form-control" placeholder="Email address" rv-value="contact:email">
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Twitter" rv-value="contact:links.twitter">
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Github" rv-value="contact:links.github">
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Website" rv-value="contact:links.website">
+          </div>
+        </form>
+        
+        <!-- ContactView -->
+        <div class="col-xs-6">
+          <div id="contact-view">
+            <div class="info">
+              <img rv-src="contact.getGravatar < :email"></img>
+              <h1>{ contact.getFullName < :first_name :last_name }</h1>
+              <p rv-html="contact:short_bio | linebreaksbr"></p>
+            </div>
+            <ul class="links" 
+              rv-show="contact.hasLinks < :links.github :links.twitter :links.website">
+              <li rv-show="contact:links.github">
+                <a rv-href="contact:links.github">
+                  <i class="fa fa-github"></i>
+                </a>
+              </li>
+              <li rv-show="contact:links.twitter">
+                <a rv-href="contact:links.twitter"><i class="fa fa-twitter"></i></a>
+              </li>
+              <li rv-show="contact:links.website">
+                <a rv-href="contact:links.website"><i class="fa fa-link"></i></a>
+              </li>
+            <ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- js assets built with Brunch -->
+    <script src="js/vendor.js"></script>
+    <script src="js/app.js" defer onload="require('example')"></script>
+  </body>
+</html>

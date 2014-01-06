@@ -2,7 +2,7 @@
   "author": "Mark Johnson",
   "name": "backbone-rivets-tutorial",
   "description": "A brief tutorial and example of using Rivets.js with Backbone.js ",
-  "version": "1.0",
+  "version": "1.0.0",
   "homepage": "https://github.com/wmdmark/backbone-rivets-tutorial",
   "repository": {
     "type": "git",

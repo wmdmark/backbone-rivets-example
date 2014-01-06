@@ -1,0 +1,31 @@
+#contact-view {
+  text-align: center;
+  border: 1px solid #ddd;
+  min-height: 200px;
+
+  .info {
+    padding: 20px;
+  }
+
+  ul.links {
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+    background-color: #ddd;
+    padding: 10px 0px;
+    li {
+      display: inline;
+      margin-left: 10px;
+      a {
+        color: #999;
+        i {
+          font-size: 2em;
+        }
+        &:hover {
+          color: #333;
+        }
+      }
+    }
+  }
+}
