@@ -4,6 +4,7 @@
     <title>Backbone.js + Rivets.js Example</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <!-- css assets built with Brunch -->
     <link href="css/vendor.css" rel="stylesheet">
@@ -13,10 +14,9 @@
 
     <div class="container">
       <header class="page-header">
-        <h1>Contact Form Demo</h1>
+        <h1>Backbone.js + Rivets.js Demo</h1>
       </header>
       <div class="row">
-
         <!-- ContactFormView -->
         <form id="contact-form-view" role="form" class="col-xs-6">
           <div class="form-group row">
@@ -49,7 +49,7 @@
           <div id="contact-view">
             <div class="info">
               <!-- Rivets note: computed property (triggered by email change) -->
-              <img rv-src="model.getGravatar < :email"></img>
+              <img rv-src="model.getGravatar < :email" rv-show="model:email"></img>
               <!-- Rivets note: computed property (triggered by :first_name :last_name change) -->
               <h1>{ model.getFullName < :first_name :last_name }</h1>
               <p rv-html="model:short_bio | linebreaksbr"></p>
@@ -74,10 +74,13 @@
       <!-- DebugView -->
       <div id="debug-view">
         <header>
+          <h3>Contact Model JSON</h3>
           <strong>Load sample data: </strong>
+          <a href="javascript:void(0);" class="btn btn-link" data-sample="michael">Michael</a>
           <a href="javascript:void(0);" class="btn btn-link" data-sample="mark">Mark</a>
           <a href="javascript:void(0);" class="btn btn-link" data-sample="mason">Mason</a>
         </header>
+
         <pre><code rv-text="model:modelJSON"></code></pre>
       </div>
 

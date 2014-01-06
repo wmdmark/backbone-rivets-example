@@ -232,7 +232,6 @@ DebugView = (function(_super) {
       this.watched.clear({
         silent: true
       });
-      console.log("setting: ", this.sampleData[sample]);
       return this.watched.set(this.sampleData[sample]);
     }
   };
@@ -294,6 +293,15 @@ $(function() {
 
 ;require.register("sample-data", function(exports, require, module) {
 module.exports = {
+  michael: {
+    first_name: "Michael",
+    last_name: "Richards",
+    short_bio: "Ruby/JavaScript developer. Author of Rivets.js.",
+    email: "mike22e@gmail.com",
+    twitter: "https://github.com/mikeric",
+    github: "http://github.com/wmdmark",
+    website: ""
+  },
   mark: {
     first_name: "Mark",
     last_name: "Johnson",

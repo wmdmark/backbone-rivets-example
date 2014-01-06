@@ -1,25 +1,44 @@
+body {
+  font-family: 'Open Sans', sans-serif !important;
+  font-weight: 400;
+  background-color: #f3f3f3; }
+  body h1, body h2, body h3 {
+    font-family: 'Open Sans', sans-serif !important; }
+
 #contact-view {
+  background-color: #fff;
   text-align: center;
   border: 1px solid #ddd;
-  min-height: 200px; }
+  min-height: 200px;
+  position: relative;
+  padding-bottom: 40px;
+  border: 1px solid #c1c1c1; }
+  #contact-view img {
+    -webkit-border-radius: 100px;
+    border: 2px solid #3576be; }
+  #contact-view h1 {
+    font-weight: 300; }
   #contact-view .info {
     padding: 20px; }
   #contact-view ul.links {
+    position: absolute;
+    bottom: 0px;
     width: 100%;
     margin: 0px;
     padding: 0px;
     list-style: none;
-    background-color: #ddd;
+    background-color: #f3f3f3;
     padding: 10px 0px; }
     #contact-view ul.links li {
       display: inline;
       margin-left: 10px; }
-      #contact-view ul.links li a {
-        color: #999; }
-        #contact-view ul.links li a i {
-          font-size: 2em; }
-        #contact-view ul.links li a:hover {
-          color: #333; }
+      #contact-view ul.links li a i {
+        font-size: 2em; }
+      #contact-view ul.links li a:hover {
+        text-decoration: none; }
+
+#debug-view pre {
+  background-color: #fff; }
 
 
 /*# sourceMappingURL=app.css.map*/

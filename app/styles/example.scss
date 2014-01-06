@@ -1,31 +1,64 @@
+body {
+  font-family: 'Open Sans', sans-serif !important;
+  font-weight: 400;
+  background-color: #f3f3f3;
+  h1,h2,h3 {
+    font-family: 'Open Sans', sans-serif !important;
+  }
+}
+
+#contact-form-view {
+  //background-color: #fff;
+}
+
 #contact-view {
+  background-color: #fff;
   text-align: center;
   border: 1px solid #ddd;
   min-height: 200px;
+  position: relative;
+  padding-bottom: 40px;
+  border: 1px solid #c1c1c1;
+
+  img {
+    -webkit-border-radius: 100px;
+    border: 2px solid #3576be;
+  }
+
+  h1 {
+    font-weight: 300;
+  }
 
   .info {
     padding: 20px;
   }
 
   ul.links {
+    position: absolute;
+    bottom: 0px;
     width: 100%;
     margin: 0px;
     padding: 0px;
     list-style: none;
-    background-color: #ddd;
+    background-color: #f3f3f3;
     padding: 10px 0px;
     li {
       display: inline;
       margin-left: 10px;
       a {
-        color: #999;
         i {
           font-size: 2em;
         }
         &:hover {
-          color: #333;
+          text-decoration: none;
         }
       }
     }
+  }
+}
+
+#debug-view {
+  pre {
+    background-color: #fff;
   }
 }

@@ -83,7 +83,6 @@ class DebugView extends BoundView
       sampleData = 
       sample = $(e.currentTarget).data().sample
       @watched.clear(silent:yes)
-      console.log "setting: ", @sampleData[sample]
       @watched.set(@sampleData[sample])
 
   initialize: (options)->
