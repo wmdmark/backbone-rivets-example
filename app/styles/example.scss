@@ -9,17 +9,25 @@ body {
   }
 
   h3 {
-    color: #999;
+    color: #333;
   }
-  header {
+
+  > header {
+    margin: 0px;
+    background-color: #fff;
     text-align: center;
+    padding: 20px;
+    border-bottom: 1px solid #c1c1c1;
+    h1 {
+      margin-top: 0px;
+    }
     p {
       color: #999;
     }
   }
 
   footer {
-    margin-top: 40px;
+    padding: 20px;
     text-align: center;
     color: #999;
   }  
@@ -76,7 +84,12 @@ body {
   }
 }
 
-#debug-view {
+#model-json-view {
+  header {
+    text-align: center;
+    color: #999;
+    padding: 10px 0px;
+  }
   pre {
     background-color: #fff;
   }

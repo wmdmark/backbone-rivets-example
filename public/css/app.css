@@ -7,13 +7,19 @@ body {
     font-family: 'Open Sans', sans-serif !important;
     text-align: center; }
   body h3 {
-    color: #999; }
-  body header {
-    text-align: center; }
-    body header p {
+    color: #333; }
+  body > header {
+    margin: 0px;
+    background-color: #fff;
+    text-align: center;
+    padding: 20px;
+    border-bottom: 1px solid #c1c1c1; }
+    body > header h1 {
+      margin-top: 0px; }
+    body > header p {
       color: #999; }
   body footer {
-    margin-top: 40px;
+    padding: 20px;
     text-align: center;
     color: #999; }
 
@@ -53,7 +59,11 @@ body {
       #contact-view ul.links li a:hover {
         text-decoration: none; }
 
-#debug-view pre {
+#model-json-view header {
+  text-align: center;
+  color: #999;
+  padding: 10px 0px; }
+#model-json-view pre {
   background-color: #fff; }
 
 

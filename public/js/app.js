@@ -92,7 +92,7 @@
 })();
 require.register("example", function(exports, require, module) {
 "The Rivets adaptor for Backbone models. \nSee docs on adaptors here: http://www.rivetsjs.com/docs/#adapters\nThis is a very simple Backbone adaptor. \nFor more advanced binding check out: \nhttps://github.com/azproduction/rivets-backbone-adapter";
-var BoundView, ContactFormView, ContactModel, ContactView, DebugView, sampleData, _ref, _ref1, _ref2, _ref3, _ref4,
+var BoundView, ContactFormView, ContactModel, ContactView, ModelJSONView, sampleData, _ref, _ref1, _ref2, _ref3, _ref4,
   __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -213,20 +213,20 @@ ContactView = (function(_super) {
 
 })(BoundView);
 
-DebugView = (function(_super) {
-  __extends(DebugView, _super);
+ModelJSONView = (function(_super) {
+  __extends(ModelJSONView, _super);
 
-  function DebugView() {
-    _ref4 = DebugView.__super__.constructor.apply(this, arguments);
+  function ModelJSONView() {
+    _ref4 = ModelJSONView.__super__.constructor.apply(this, arguments);
     return _ref4;
   }
 
-  DebugView.prototype.el = "#debug-view";
+  ModelJSONView.prototype.el = "#model-json-view";
 
-  DebugView.prototype.sampleData = require("sample-data");
+  ModelJSONView.prototype.sampleData = require("sample-data");
 
-  DebugView.prototype.events = {
-    "click a.btn": function(e) {
+  ModelJSONView.prototype.events = {
+    "click a": function(e) {
       var sample;
       sampleData = sample = $(e.currentTarget).data().sample;
       this.watched.clear({
@@ -236,7 +236,7 @@ DebugView = (function(_super) {
     }
   };
 
-  DebugView.prototype.initialize = function(options) {
+  ModelJSONView.prototype.initialize = function(options) {
     if (this.model == null) {
       this.model = new Backbone.Model();
     }
@@ -245,13 +245,13 @@ DebugView = (function(_super) {
     return this.listenTo(this.watched, "change", this._setWatchedModelJSON);
   };
 
-  DebugView.prototype._setWatchedModelJSON = function() {
+  ModelJSONView.prototype._setWatchedModelJSON = function() {
     var json;
     json = JSON.stringify(this.watched.toJSON(), null, '  ');
     return this.model.set("modelJSON", json);
   };
 
-  return DebugView;
+  return ModelJSONView;
 
 })(BoundView);
 
@@ -284,7 +284,7 @@ $(function() {
   new ContactView({
     model: contactModel
   }).render();
-  return new DebugView({
+  return new ModelJSONView({
     watch: contactModel
   }).render();
 });

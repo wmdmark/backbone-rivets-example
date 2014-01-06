@@ -75,11 +75,11 @@ class ContactFormView extends BoundView
 class ContactView extends BoundView
   el: "#contact-view"
 
-class DebugView extends BoundView
-  el: "#debug-view"
+class ModelJSONView extends BoundView
+  el: "#model-json-view"
   sampleData: require("sample-data")
   events:
-    "click a.btn": (e)->
+    "click a": (e)->
       sampleData = 
       sample = $(e.currentTarget).data().sample
       @watched.clear(silent:yes)
@@ -118,6 +118,6 @@ $ ->
   window.contactModel = new ContactModel()
   new ContactFormView(model: contactModel).render()
   new ContactView(model: contactModel).render()
-  new DebugView(watch: contactModel).render()
+  new ModelJSONView(watch: contactModel).render()
 
   

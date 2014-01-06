@@ -11,22 +11,22 @@
     <link href="css/app.css" rel="stylesheet">
   </head>
   <body>
+    <header>
+      <h1>Backbone.js + Rivets.js Demo</h1>
+      <p>Three <a href="http://backbonejs.org/">Backbone.js</a> views bound to a single model and updated through <a href="http://www.rivetsjs.com/">Rivets.js</a> bindings.</p>
+    </header>
 
     <div class="container">
-      <header class="page-header">
-        <h1>Backbone.js + Rivets.js Demo</h1>
-        <p>Three <a href="http://backbonejs.org/">Backbone.js</a> views bound to a single model and updated through <a href="http://www.rivetsjs.com/">Rivets.js</a> bindings.</p>
-      </header>
       <div class="row">
 
         <!-- ContactFormView -->
-        <form id="contact-form-view" role="form" class="col-xs-6">
+        <form id="contact-form-view" role="form" class="col-md-6">
           <h3>Contact Form View</h3>
-          <div class="form-group row">
-            <div class="col-xs-6">
+          <div class="row">
+            <div class="form-group col-sm-6">
               <input type="text" class="form-control" placeholder="First name" rv-value="model:first_name">
             </div>
-            <div class="col-xs-6">
+            <div class="form-group col-sm-6">
               <input type="text" class="form-control" placeholder="Last name" rv-value="model:last_name">
             </div>
           </div>
@@ -48,7 +48,7 @@
         </form>
         
         <!-- ContactView -->
-        <div class="col-xs-6">
+        <div class="col-md-6">
           <h3>Contact View</h3>
           <div id="contact-view">
             <div class="info">
@@ -75,16 +75,15 @@
         </div>
       </div>
 
-      <!-- DebugView -->
-      <div id="debug-view">
+      <!-- ModelJSONView -->
+      <div id="model-json-view">
         <header>
           <h3>Contact Model JSON View</h3>
-          <strong>Load sample data: </strong>
-          <a href="javascript:void(0);" class="btn btn-link" data-sample="michael">Michael</a>
-          <a href="javascript:void(0);" class="btn btn-link" data-sample="mark">Mark</a>
-          <a href="javascript:void(0);" class="btn btn-link" data-sample="mason">Mason</a>
+          Load sample data:
+          <a href="javascript:void(0);" data-sample="michael">Michael, </a>
+          <a href="javascript:void(0);" data-sample="mark">Mark, </a>
+          <a href="javascript:void(0);" data-sample="mason">Mason</a>
         </header>
-
         <pre><code rv-text="model:modelJSON"></code></pre>
       </div>
 
