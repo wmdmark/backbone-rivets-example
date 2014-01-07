@@ -298,8 +298,8 @@ module.exports = {
     last_name: "Richards",
     short_bio: "Ruby/JavaScript developer. Author of Rivets.js.",
     email: "mike22e@gmail.com",
-    twitter: "https://github.com/mikeric",
-    github: "http://github.com/wmdmark",
+    twitter: "https://twitter.com/mikeric",
+    github: "http://github.com/mikeric",
     website: ""
   },
   mark: {
