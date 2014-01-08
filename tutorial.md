@@ -1,21 +1,23 @@
 # Backbone.js + Rivet.js = Crazy Delicious
 
-At Pathwright we use Backbone.js heavily, every day. and while Backbone.js is a great starting point for larger, client-side applications, it's really minimal.
+Web frameworks with binding support baked in are becoming increasingly popular. Many of the the newer client side frameworks (such as Angular.js) have data binding on a pedestal as a central part of the framework's philosophy.
 
-It requires creating your own patterns and architecture. There's no right way to do it.
+Backbone.js never has and likely never will have binding baked in. How you display render or display your views is entirely up to you. Want to use handlebars? Fine. Plain old DOM? Also fine. Binding? You betcha.
 
-So when tackling various pain points in web development, you've still got to pick the right tools for the job. 
+There are many different libraries[*](#otherlibs) for binding with Backbone.js, but my personal favorite is [Rivets.js](rivetsjs.com).
 
-Rivets.js and Backbone have helped me solve some of those pain points rather elegantly I think. In this tutorial, we'll go over a brief intro to data binding and then dive write into a practical example of data binding in Backbone.js with Rivets.js.
+Rivets.js + Backbone.js has helped me solve some of the most common pain points in web development (such as forms) rather elegantly. 
 
-## A brief overview of data binding
-Data binding is the process that establishes a connection between the UI and the application's data models and/or business logic. 
+In this tutorial, we'll go over a brief intro to data binding and then dive write into a practical example of data binding in Backbone.js with Rivets.js.
 
-One-way data binding has to do with presenting data from the model to the view (model -> view).
+# Starting from the top
 
-Two-way data binding has to do with both presenting and interacting with data. Presenting the model in the view as well as updating the model from interaction with the view (model <-> view).
+## What is data binding?
+* Data binding is the process that establishes a connection between the UI and the application's data models and/or business logic. 
+* One-way data binding has to do with presenting data from the model to the view (model -> view).
+* Two-way data binding has to do with both presenting and interacting with data. Presenting the model in the view as well as updating the model from interaction with the view (model <-> view).
 
-When is data binding useful? 
+## When is data binding useful? 
 * When you want to update a small part of a view without re-rendering the whole thing
 * When you need a live preview based on data input
 * Updating data from a form and initializing a form with data
@@ -23,29 +25,32 @@ When is data binding useful?
 
 Data binding is not a new concept. This is a concept that's been around for over a decade (mostly in the windows development world) but is just now becoming a pattern on the web.
 
-Some of the hottest new web development stacks have variants of data binding built in at their core including Angular.js, Ember.js, React.js (sort of) among others.
-
-While Backbone, being the minimal framework that it is, does not build in data binding, it's implementations of models with change events + a library like Rivets.js makes it trivial to implement when you need it.
-
 ## Data binding with Backbone and Rivets.js
-Rivets is a lightweight (3.4kb) library for data binding (and a little templating) for modern web applications
-It's framework agnostic so can be used practically web stack. Works best for frameworks that have an event driven patterns built in (model change events etc…)
 
-It's highly configurable and can be made to do pretty much any kind of binding you can think of.
+Rivets is a lightweight (3.4kb) library for data binding (and basic templates) for modern web applications.
 
-### Rivets 101:
+It's framework agnostic so it can be used in practically any web stack but it pairs particularly well with Backbone.
+
+Rivets is highly configurable and can be made to support any kind of binding  pattern you can think up.
+
+### Rivets Basics:
 
 Rivets uses DOM based binding and tempting. You tell Rivets what DOM element to bind-to with minimal instructions and Rivets does the rest. 
 
-For example you can bind a DOM element to a JavaScript object with a single line of codE:
+#### A simple example:
 
-_Note that while you could bind a model or object to the entire document, it's best to only bind to the elements that need to be updated by the model.
-
+```html
+<div id="greet-view">
+  <input rv-value="model:first_name" placholder="What's your name?">
+  <h1 rv-show="model:first_name">Hi { model:first_name}!</h1>
+</div>
+```
 ```coffeescript
-rivets.bind(document.getElementById('info'), data)
+model = new Backbone.Model(first_name:"")
+rivets.bind($("#greet-view"), model)
 ```
 
-Rivets supports a lot of different types of binding and other useful components. I recommend you take a minute to look over it's excellent documentation: [http://www.rivetsjs.com/](http://www.rivetsjs.com/)
+Rivets supports a lot of different types of binding and other useful components out of the box. I recommend you take a minute to look over it's excellent documentation: [http://www.rivetsjs.com/](http://www.rivetsjs.com/)
 
 ### Rivets & Backbone
 
@@ -143,6 +148,12 @@ As you can see we're creating a @binding propery on the view in the render funct
 We're also unbinding the @binding property when the view is removed so that we can avoid memory leaks.
 
 The cool thing about this, is that with very little code, we have a two way binding between our form and our model. So all we'd have to do to save the model to the server (assuming that the form was valid) is call `model.save()`!
+
+
+###<a name="otherlibs"></a> Other Binding Libaries for Backbone
+* [Backbone.stickit](http://nytimes.github.io/backbone.stickit/)
+* [Backbone.ModelBinder](https://github.com/theironcook/Backbone.ModelBinder)
+* [Knockback.js](http://kmalakoff.github.io/knockback/) (Depends on Knockout.js)
 
 
 
