@@ -50,6 +50,8 @@ model = new Backbone.Model(first_name:"")
 rivets.bind($("#greet-view"), model)
 ```
 
+See example here: http://jsbin.com/OJeGIni/2/
+
 Rivets supports a lot of different types of binding and other useful components out of the box. I recommend you take a minute to look over it's excellent documentation: [http://www.rivetsjs.com/](http://www.rivetsjs.com/)
 
 ### Rivets & Backbone
