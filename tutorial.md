@@ -2,7 +2,7 @@
 
 Web frameworks with data binding support baked in are becoming increasingly popular. Many of the the newer client side frameworks (such as Angular.js) have data binding on a pedestal as a central part of the framework's philosophy.
 
-Backbone never has and likely never will have data binding baked in. Backbone does not care how you display render or display your views and I think that's a good thing. Want to use handlebars? Fine. Plain old DOM? Also fine. Binding? You betcha. You could even use the new kid on the block [http://facebook.github.io/react/]](React.js) if that's your cup of tea.
+Backbone never has and likely never will have data binding baked in. Backbone does not care how you display render or display your views and I think that's a good thing. Want to use handlebars? Fine. Plain old DOM? Also fine. Binding? You betcha. You could even use the new kid on the block [React](React.js) if that's your cup of tea.
 
 There are many different libraries[*](#otherlibs) for binding views in Backbone, but my personal favorite is [Rivets](rivetsjs.com).
 
@@ -33,11 +33,9 @@ Data binding is not a new concept. This is a concept that's been around for over
 * Rivets uses DOM-based binding. You tell Rivets what DOM element to bind your data to and Rivets does the rest. 
 
 
-## A practical example
+## Backbone + Rivets + Forms: A match made in heaven
 
 One of the biggest pain-points in modern web development is working with `<forms>`. There are a plenty of libraries for working with validation and rendering of forms both the client and the server but in my experience they continue to be the most time consuming part of any project. This is an area where data binding (two-way specifically) can make your life easier.
-
-### Backbone + Rivets + Forms: A match made in heaven
 
 As an example, let's work with a form that modifies the contact model and also show the same contact model in other views. We'll be walking through pieces of this example and explaining how Rivets is being used in our views/templates.
 
