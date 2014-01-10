@@ -159,12 +159,25 @@ This is cool and all but binding is more interesting with more than one view bou
 </div>
 ```
 
-We're getting a bit more fancy with our bindings now. Let's step through some of the more interesting parts.
+We're getting a bit fancy with our bindings now. Let's take at the `<img>` tag.
 ```html
 <img rv-src="model.getGravatar < :email" rv-show="model:email"></img>
 ```
 
-As you can see above I'm binding the "src" attribute of my `<img>` tag to a function on my model called `getGravatar`. See how I'm using the "." syntax between the model and the function name instead of the ":" syntax? That's because `getGravatar` is not an attribute of my model but a function directly on the view object. The "." syntax tells Rivets to bind using the built in object apaptor.
+As you can see above I'm binding the `src` attribute of my `<img>` tag to a function on my model called `getGravatar`. See how I'm using the `.` syntax between the model and the function name instead of the `:` syntax? That's because `getGravatar` is not an attribute of my model but a function directly on the view object. The `.` syntax tells Rivets to bind using the built in object apaptor.
+
+The other interesting part of this binding setup is the ` < :email` instruction inside the `rv-src` binding. This is telling Rivets to recompute the value of `getGravatar` whenever the `:email` attribute is changed. Pretty nice huh? The `rv-show="model:email"` attribute will hide or show the image based on whether or not the email is set.
+
+### Customizing Rivets
+
+As I mentioned earlier in this tutorial, Rivets is made to be configured and customized however you like and I'm doing just that in our contact view to bind the model.short_bio attribute:
+
+```html
+<p rv-html="model:short_bio | linebreaksbr"></p>
+```
+
+The `rv-html` binding will set the elements innerHTML whenver `short_bio` is changed. However, since I am setting the HTML in plain text, I will lose any linebreaks present since HTML ignores whitespace. This is where Rivets Formatters come in. Any binding can be piped through a formater that will adjust how the value is displayed on the DOM.
+
 
 
 
