@@ -32,8 +32,6 @@ for examples sake we're combinding everything here.
 """
 class ContactModel extends Backbone.Model
 
-  url: "contacts/"
-
   defaults:->
     first_name: ""
     last_name: ""
@@ -48,10 +46,6 @@ class ContactModel extends Backbone.Model
 
   getFullName: -> 
     "#{@get('first_name')} #{@get('last_name')}"
-
-  hasLinks: =>
-    vs = _.uniq(_.values(@get("links")))
-    !(vs.length is 1 and vs[0] is "")
 
 
 sampleData = require('sample-data')
