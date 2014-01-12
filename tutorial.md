@@ -1,10 +1,12 @@
 # Backbone.js + Rivet.js = Crazy Delicious
 
-Web frameworks with data binding support baked in are becoming increasingly popular. Many of the the newer client side frameworks (such as Angular.js) have data binding on a pedestal as a central part of the framework's philosophy.
+Web frameworks built around data-binding are the kipper's knickers these days. There's Angular, Ember, Knockout, Meteor, React and more that come with data-binding  baked in.
 
-Backbone never has and likely never will have data binding baked in. Backbone does not care how you display render or display your views and I think that's a good thing. Want to use handlebars? Fine. Plain old DOM? Also fine. Binding? You betcha. You could even use the new kid on the block [React](React.js) if that's your cup of tea.
+Backbone however never has and likely never will ship with any sort of data-binding. Backbone is agnostic as to how you render your views and I think that's a good thing. Want to use Handlebars? Fine. Plain old DOM? Also fine. Binding? You betcha. You could even plugin the new kid on the block [React](React.js) if you like.
 
-There are many different libraries[*](#otherlibs) for binding views in Backbone, but my personal favorite is [Rivets](rivetsjs.com).
+That said, binding has a prominate place in these other frameworks for a reason. It's darn convienent.
+
+Fortunetelly, there are many different libraries[*](#otherlibs) for binding views in Backbone that have you covered. My personal favorite is [Rivets](rivetsjs.com).
 
 Rivets + Backbone has helped me solve some of the most common pain points in web development (such as forms tied to models) rather elegantly. 
 
@@ -198,34 +200,33 @@ As you can see we're creating a @binding property on the view in the render func
 
 The cool thing about this, is that with very little code, we have a two way binding between our form and our model. So all we'd have to do to save the model to the server (assuming that the form was valid) is call `model.save()`!
 
-### Getting fancy
+## Getting fancy
 
-The code listed above is using some pretty cool features of Rivets that we haven't gone over yet. I'll step throught those now.
-
+The code examples listed above are using some pretty cool features of Rivets that we haven't gone over yet. I'll step throught those now.
 
 #### Computed Properties
 
-We're getting a bit fancy with our bindings now. Let's take at the `<img>` tag.
+Take a look at the binding code for our avatar `<img>` tag.
 ```html
 <img rv-src="model.getGravatar < :email" rv-show="model:email"></img>
 ```
 
-As you can see above I'm binding the `src` attribute of my `<img>` tag to a function on my model called `getGravatar`. See how I'm using the `.` syntax between the model and the function name instead of the `:` syntax? That's because `getGravatar` is not an attribute of my model but a function directly on the view object. The `.` syntax tells Rivets to bind using the built in object apaptor.
+As you can see above I'm binding the `src` attribute of my `<img>` tag to a function on the contact model called `getGravatar`. See how I'm using the `.` syntax between the model and the function name instead of the `:` syntax? That's because `getGravatar` is not a backbone attribute of my model but a function directly on the view object. The `.` syntax tells Rivets to bind using the built in object apaptor rather than my Backbone adaptor which is triggered by the `:` character.
 
-The other interesting part of this binding setup is the ` < :email` instruction inside the `rv-src` binding. This is telling Rivets to recompute the value of `getGravatar` whenever the `:email` attribute is changed. Pretty nice huh? The `rv-show="model:email"` attribute will hide or show the image based on whether or not the email is set.
-
-As I mentioned earlier in this tutorial, Rivets is made to be configured and customized to behave however you like and I'm doing just that in our contact view. 
-
-In particular the bindings to `model.short_bio attribute` have a few customizations.
+The other interesting part of this binding setup is the ` < :email` instruction inside the `rv-src` binding. This is telling Rivets to recompute the value of `getGravatar` whenever the `:email` attribute is changed (using our Backbone adaptor). Pretty nice huh? The other binding on my `<img>`, the `rv-show="model:email"` attribute will hide or show the image based on whether or not the email attribute is set.
 
 #### Custom Bindings
 
+As I mentioned earlier in this tutorial, Rivets is made to be configured and customized to behave however you like and I'm doing just that in parts of our contact view. 
+
+In particular the bindings to `model.short_bio attribute` have a few customizations.
+
 First, I'm using a custom binder on the `<textarea>` element:
 ```html
-<textarea ... rv-live-value="model:short_bio"></textarea>
+<textarea rv-live-value="model:short_bio"></textarea>
 ```
 
-The `rv-live-value` attribute makes binding to the model happend `onkeyup` instead of on `change` which is the default behavior. Here's the code to create the live binding:
+The `rv-live-value` attribute makes binding to the model happend `onkeyup` instead of on `change` which is the default behavior of `rv-value`. Here's the code to create the live binding:
 ```coffeescript
 rivets.binders['live-value'] =
   publishes: true
@@ -234,9 +235,9 @@ rivets.binders['live-value'] =
   routine: (el, value) -> rivets.binders.value.routine(el, value)
 ```
 
-Note that I'm only change the behavior of the `bind` and `unbind` options while defering to the normal `rivets.binders.value` function in the binding `routine`.
+Note that I'm only change the behavior of the `bind` and `unbind` options while defering to the normal `rivets.binders.value` function in the binding `routine` function.
 
-You can read more about custome binding in the [docs](http://www.rivetsjs.com/docs/#binders).
+Custom bindings are document in the Rivet's [docs](http://www.rivetsjs.com/docs/#binders). I also found reading through the [built-in bindings code](https://github.com/mikeric/rivets/blob/master/src/binders.coffee) very helpful.
 
 #### Custom Formatters
 
@@ -246,7 +247,7 @@ The part of our contact view that is displaying the value of `mode:short_bio` is
 <p rv-html="model:short_bio | linebreaksbr"></p>
 ```
 
-See that `| linbreaksbr` instruction in the binding attribute? That's a custom formatter. The `rv-html` binding will set the elements innerHTML whenver `short_bio` is changed. However, since I am setting the HTML in plain text, I will lose any linebreaks present since HTML ignores whitespace. This is where my custom formatter comes into play. Any binding can be piped through a formater that will adjust how the value is displayed on the DOM.
+See that `| linbreaksbr` instruction in the binding attribute? That's a custom formatter. The `rv-html` binding will [set the innerHTML](https://github.com/mikeric/rivets/blob/master/src/binders.coffee#L12) whenver `short_bio` is changed. However, since I am setting the HTML in plain text, I will lose any linebreaks in the attribute since HTML ignores whitespace. This is where my custom formatter comes into play. Any binding can be piped through a formater that will adjust how the value is displayed on the DOM.
 
 Here's the code for the `linebreaksbr`  formatter that will convert text line breaks (`\n`) to `<br>` tags:
 
@@ -255,8 +256,16 @@ rivets.formatters.linebreaksbr = (value)->
   return value.replace(/\n/g, '<br>')
 ```
 
-As you can see creating custom formatters is simple. Be sure to take a look at the [built-in formatters](http://www.rivetsjs.com/docs/#formatters) that Rivets offers before creating your own.
+As you can see creating custom formatters is simple. You can read more about formatters in the [docs](http://www.rivetsjs.com/docs/#formatters).
 
+
+## Where to go from here
+
+I hope you can see from this tutorial how useful Rivets can be when combined with Backbone. 
+
+If you'd like to dive deeper I'd encourage you to checkout the [demo](http://wmdmark.github.io/backbone-rivets-example/) as well as it's [source code](https://github.com/wmdmark/backbone-rivets-example/blob/master/app/example.coffee) and to use Rivets in one of your own Backbone projects.
+
+I'd love to see anything you make as well as hear your feedback on this tutorial. Feel free to reach out to me here on Github or follow me on Twitter: [@wmdmark](http://twitter.com/wmdmark).
 
 
 
