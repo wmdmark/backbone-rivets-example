@@ -149,9 +149,9 @@ Now for the contact card view template that will be updated by our form through 
 ```
 This view demonstrates a few interesting features beyond basic binding that we will review a little later.
 
-#### Step 3: The Views
+#### Step 4: The Views
 
-Next let's create the Backbone View to bind actually apply the bindings to the form.
+Next let's create the Backbone Views to apply the bindings to our templates.
 
 ```coffeescript
 class ContactFormView extends Backbone.Model
