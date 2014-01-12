@@ -1,31 +1,31 @@
-# Backbone.js + Rivet.js = Crazy Delicious
+# Binding built in
 
-Web frameworks built around data-binding are the kipper's knickers these days. There's Angular, Ember, Knockout, Meteor, React and more that come with data-binding  baked in.
+Web frameworks built around data binding are where it's at these days. Angular, Ember, Knockout, Meteor, React and more come with data binding baked in. Binding has a prominate place in these frameworks for a reason. It's darn convienent.
 
-Backbone however never has and likely never will ship with any sort of data-binding. Backbone is agnostic as to how you render your views and I think that's a good thing. Want to use Handlebars? Fine. Plain old DOM? Also fine. Binding? You betcha. You could even plugin the new kid on the block [React](React.js) if you like.
+Backbone, however, never has and likely never will ship with any sort of data binding. Backbone is agnostic about how views are rendered. Personally, I think that's a good thing. Want to use Handlebars? Fine. Plain old DOM? Also fine. Binding based views? You betcha.
 
-That said, binding has a prominate place in these other frameworks for a reason. It's darn convienent.
+## Binding with Backbone
 
-Fortunetelly, there are many different libraries[*](#otherlibs) for binding views in Backbone that have you covered. My personal favorite is [Rivets](rivetsjs.com).
+There are many different libraries[*](#otherlibs) for binding views in Backbone. My personal favorite is [Rivets](rivetsjs.com).
 
-Rivets + Backbone has helped me solve some of the most common pain points in web development (such as forms tied to models) rather elegantly. 
+Rivets + Backbone has helped me solve some of the most common pain points in web development rather elegantly. 
 
-In this tutorial, we'll go over a brief intro to data binding and then dive write into a practical example of data binding in Backbone with Rivets.
+In this tutorial, we'll go over a brief intro to data binding and then dive  into a practical example of data binding in Backbone with Rivets.
 
 ## Starting from the top
+
+Data binding is not a new concept. This is a concept that's been around for over decades but is just now becoming a pattern on the web. Before we get into the weeds, let's review what data binding is and what it's good for. 
 
 ### What is data binding?
 * Data binding is the process that establishes a connection between the UI and the application's data models and/or business logic. 
 * One-way data binding has to do with presenting data from the model to the view (model -> view).
 * Two-way data binding has to do with both presenting and interacting with data. Presenting the model in the view as well as updating the model from interaction with the view (model <-> view).
 
-### When is data binding useful? 
-* When you want to update a small part of a view without re-rendering the whole thing
-* When you need a live preview based on data input
-* When you need to sync user input with your model (hello forms)
-* Finite state machine driven UIs and more...
-
-Data binding is not a new concept. This is a concept that's been around for over a decade (mostly in the windows development world) but is just now becoming a pattern on the web.
+### When is data binding useful?
+* When you want to update a small part of a view without re-rendering the whole thing.
+* When you need a live preview based on data input.
+* When you need to sync user input with your model (forms).
+* Finite-state machine driven UIs and more...
 
 ### Data binding with Backbone and Rivets
 
@@ -35,7 +35,7 @@ Data binding is not a new concept. This is a concept that's been around for over
 * Rivets uses DOM-based binding. You tell Rivets what DOM element to bind your data to and Rivets does the rest. 
 
 
-## Backbone + Rivets + Forms: A match made in heaven
+## Backbone.js + Rivet.js + Forms = Crazy Delicious
 
 One of the biggest pain-points in modern web development is working with `<forms>`. There are a plenty of libraries for working with validation and rendering of forms both the client and the server but in my experience they continue to be the most time consuming part of any project. This is an area where data binding (two-way specifically) can make your life easier.
 
@@ -103,46 +103,28 @@ Note the two helper functions `getGravatar` and `getFullName`. Those will come i
 
 #### Step 3: The Templates
 
-Let's start with the contact form template built using vanilla [Bootstrap 3](http://getbootstrap.com):
+Let's start with the contact form template built using vanilla [Bootstrap 3](http://getbootstrap.com) _(some tags and attributes ommited for brevity)_:
 ```html
-<form id="contact-form-view" role="form" class="col-md-6">
+<form id="contact-form-view">
   <h3>Contact Form View</h3>
-  <div class="row">
-    <div class="form-group col-sm-6">
-      <input type="text" class="form-control" placeholder="First name" rv-value="model:first_name">
-    </div>
-    <div class="form-group col-sm-6">
-      <input type="text" class="form-control" placeholder="Last name" rv-value="model:last_name">
-    </div>
-  </div>
-  <div class="form-group">
-    <textarea class="form-control" rows="3" placeholder="Short bio" rv-live-value="model:short_bio"></textarea>
-  </div>
-  <div class="form-group">
-    <input type="email" class="form-control" placeholder="Email address" rv-value="model:email">
-  </div>
-  <div class="form-group">
-    <input type="text" class="form-control" placeholder="Twitter" rv-value="model:twitter">
-  </div>
-  <div class="form-group">
-    <input type="text" class="form-control" placeholder="Github" rv-value="model:github">
-  </div>
-  <div class="form-group">
-    <input type="text" class="form-control" placeholder="Website" rv-value="model:website">
-  </div>
+  <input type="text" placeholder="First name" rv-value="model:first_name">
+  <input type="text" placeholder="Last name" rv-value="model:last_name">
+  <textarea placeholder="Short bio" rv-live-value="model:short_bio"></textarea>
+  <input type="email" placeholder="Email address" rv-value="model:email">
+  <input type="text" placeholder="Twitter" rv-value="model:twitter">
+  <input type="text" placeholder="Github" rv-value="model:github">
+  <input type="text" placeholder="Website" rv-value="model:website">
 </form>
 ```
 
-See those `rv-value` attributes on the input tags? This is a special rivets attribute that tells Rivets how it should bind data to that element. Note that in the first_name input the binding attribute is set to `rv-value="model:first_name"`. This tells Rivets that we are binding the value of the input element and that we are binding it to the first_name attribute of the model. That ":" in between the model and the attribute tells rivets to use our Backbone adaptor defined above.
+See those `rv-value` attributes on the input tags? This is a special rivets attribute that tells Rivets how it should bind data to that element. Note that in the first_name input the binding attribute is set to `rv-value="model:first_name"`. This tells Rivets that we are binding the value of the input element and that we are binding it to the first_name attribute of the model. The `:` in between the model and the attribute tells Rivets to use our Backbone adaptor we defined above.
 
 Now for the contact card view template that will be updated by our form through the model:
 
 ```html
 <div id="contact-view">
   <div class="info">
-    <!-- Rivets note: computed property (triggered by email change) -->
-    <img rv-src="model.getGravatar < :email" rv-show="model:email"></img>
-    <!-- Rivets note: computed property (triggered by :first_name :last_name change) -->
+    <img rv-src="model.getGravatar < :email" rv-show="model:email">
     <h1>{ model.getFullName < :first_name :last_name }</h1>
     <p rv-html="model:short_bio | linebreaksbr"></p>
   </div>
@@ -153,17 +135,19 @@ Now for the contact card view template that will be updated by our form through 
       </a>
     </li>
     <li rv-show="model:twitter">
-      <a rv-href="model:twitter"><i class="fa fa-twitter"></i></a>
+      <a rv-href="model:twitter">
+        <i class="fa fa-twitter"></i>
+      </a>
     </li>
     <li rv-show="model:website">
-      <a rv-href="model:website"><i class="fa fa-link"></i></a>
+      <a rv-href="model:website">
+        <i class="fa fa-link"></i>
+      </a>
     </li>
   <ul>
 </div>
 ```
-
-
-Rivets supports a lot of different types of binding and other useful components out of the box. I recommend you take a minute to look over it's excellent documentation: [http://www.rivetsjs.com/](http://www.rivetsjs.com/)
+This view demonstrates a few interesting features beyond basic binding that we will review a little later.
 
 #### Step 3: The Views
 
@@ -196,30 +180,38 @@ $ ->
   new ContactView(model: model).render()
 ```
 
-As you can see we're creating a @binding property on the view in the render function by telling Rivets to bind the view's DOM node (@el) to view's model (@model). We're also unbinding the @binding property when the view is removed so that we can avoid memory leaks.
+As you can see we're creating a `binding` property on both views in the `render` function by telling Rivets to bind the view's DOM node (`@el`) to view's model (`@model`). We're also unbinding the `binding` property when the view is removed so that we can avoid memory leaks.
 
-The cool thing about this, is that with very little code, we have a two way binding between our form and our model. So all we'd have to do to save the model to the server (assuming that the form was valid) is call `model.save()`!
+The cool thing about this, is that with very little code, we have a two way binding between our form, our model and our contact view. So all we'd have to do to save the model to the server (assuming that the form was valid) is call `model.save()`!
 
-## Getting fancy
+We are re-peating ourself in the `ContactFormView` and `ContactView`'s binding code. Before we move on, let's refactor our code to be more DRY by creating a base class that includes the binding functionality.
+
+```coffeescript
+class BoundView extends Backbone.View
+  render: ->
+    super()
+    @bindingView = rivets.bind(@el, model: @model, view: @)
+    return @
+  remove: ->
+    @bindingView.unbind()
+    super()
+    
+class ContactFormView extends BoundView
+  el: "#contact-form-view"
+
+class ContactView extends BoundView
+  el: "#contact-view"
+```
+
+That's a lot better. Now we can bind any view we like by extending the `BoundView` class and adding the appropriate binding attributes to our template.
+
+## Getting Fancy
 
 The code examples listed above are using some pretty cool features of Rivets that we haven't gone over yet. I'll step throught those now.
 
-#### Computed Properties
-
-Take a look at the binding code for our avatar `<img>` tag.
-```html
-<img rv-src="model.getGravatar < :email" rv-show="model:email"></img>
-```
-
-As you can see above I'm binding the `src` attribute of my `<img>` tag to a function on the contact model called `getGravatar`. See how I'm using the `.` syntax between the model and the function name instead of the `:` syntax? That's because `getGravatar` is not a backbone attribute of my model but a function directly on the view object. The `.` syntax tells Rivets to bind using the built in object apaptor rather than my Backbone adaptor which is triggered by the `:` character.
-
-The other interesting part of this binding setup is the ` < :email` instruction inside the `rv-src` binding. This is telling Rivets to recompute the value of `getGravatar` whenever the `:email` attribute is changed (using our Backbone adaptor). Pretty nice huh? The other binding on my `<img>`, the `rv-show="model:email"` attribute will hide or show the image based on whether or not the email attribute is set.
-
 #### Custom Bindings
 
-As I mentioned earlier in this tutorial, Rivets is made to be configured and customized to behave however you like and I'm doing just that in parts of our contact view. 
-
-In particular the bindings to `model.short_bio attribute` have a few customizations.
+As I mentioned earlier, Rivets is made to be configured and customized to behave however you like and I'm doing just that in parts of our contact view. 
 
 First, I'm using a custom binder on the `<textarea>` element:
 ```html
@@ -239,7 +231,7 @@ Note that I'm only change the behavior of the `bind` and `unbind` options while 
 
 Custom bindings are document in the Rivet's [docs](http://www.rivetsjs.com/docs/#binders). I also found reading through the [built-in bindings code](https://github.com/mikeric/rivets/blob/master/src/binders.coffee) very helpful.
 
-#### Custom Formatters
+#### Formatters
 
 The part of our contact view that is displaying the value of `mode:short_bio` is using another cool feature of Rivets: formatters. Here's the relevent code:
 
@@ -258,6 +250,17 @@ rivets.formatters.linebreaksbr = (value)->
 
 As you can see creating custom formatters is simple. You can read more about formatters in the [docs](http://www.rivetsjs.com/docs/#formatters).
 
+
+#### Computed Properties
+
+Take a look at the binding code for our avatar `<img>` tag.
+```html
+<img rv-src="model.getGravatar < :email" rv-show="model:email"></img>
+```
+
+As you can see above I'm binding the `src` attribute of my `<img>` tag to a function on the contact model called `getGravatar`. Notice how I'm using the `.` syntax between the model and the function name instead of the `:` syntax? That's because `getGravatar` is not a backbone attribute of my model but a function directly on the view object. The `.` syntax tells Rivets to bind using the built in object apaptor rather than my Backbone adaptor which is triggered by the `:` character.
+
+The other interesting part of this binding setup is the ` < :email` instruction inside the `rv-src` binding. This is telling Rivets to recompute the value of `getGravatar` whenever the `:email` attribute is changed (using our Backbone adaptor). Computed properties are helpful in scenarios where data needs to  update on a view but isn't necessarily a part of your model's core properties.
 
 ## Where to go from here
 
