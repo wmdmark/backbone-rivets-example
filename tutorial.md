@@ -1,6 +1,6 @@
-# Binding built in
+# Binding!
 
-Web frameworks built around data binding are where it's at these days. Angular, Ember, Knockout, Meteor, React and more come with data binding baked in. Binding has a prominate place in these frameworks for a reason. It's darn convienent.
+Web frameworks built around data binding are getting quite a lot of attention recently. Angular, Ember, Knockout, Meteor, React and more come with data binding baked in, and with good reason -- binding can help you create faster and more responsive interfaces while writing less code.
 
 Backbone, however, never has and likely never will ship with any sort of data binding. Backbone is agnostic about how views are rendered. Personally, I think that's a good thing. Want to use Handlebars? Fine. Plain old DOM? Also fine. Binding based views? You betcha.
 
@@ -47,30 +47,26 @@ As an example, let's work with a form that modifies the contact model and also s
 
 I won't be covering all of the code in the demo but I will cover all the key points. The source for the demo is commented throughout if you would like to dive deeper after the tutorial.
 
+_All the code examples in this tutorial are written in [CoffeeScript](http://coffeescript.org/) but you can apply these same code patterns in JavaScript with minimal effort._
 
 #### Step 1: The Adapter
 
-Being framework agnostic, you must tell Rivets how to update and read data from your models as things are changed. This is done through a simple adaptor.
-If you'd like to use Rivets with you'll need to start by creating a simple Adaptor that tells Rivets how to watch for changes and apply updates to your model.
+Being framework agnostic, you must tell Rivets how to update and read data from your models as things are changed. This is done through a simple adaptor.Adaptors tell Rivets how to watch for changes and apply updates to your model.
 
-Here's a simple example of Backbone adaptor for Rivets:
+Here's the code for a simple Backbone Rivets adaptor:
 
 ```coffeescript
 rivets.adapters[':'] =
   subscribe: (obj, keypath, callback) ->
-    return if not obj?
     obj.on "change:" + keypath, callback
 
   unsubscribe: (obj, keypath, callback) ->
-    return if not obj?
     obj.off "change:" + keypath, callback
 
   read: (obj, keypath) ->
-    return if not obj?
     obj.get keypath
 
   publish: (obj, keypath, value) ->
-    return if not obj?
     obj.set keypath, value
 ```
 
@@ -78,7 +74,7 @@ There are more [powerful adaptors](https://github.com/azproduction/rivets-backbo
 
 #### Step 2: The Model
 
-For this example, I've created a simple Backbone model that represents a contact in our app.
+For this example, I've created a simple Backbone model that represents a contact in our application.
 
 ```coffeescript
 class ContactModel extends Backbone.Model
@@ -103,7 +99,7 @@ Note the two helper functions `getGravatar` and `getFullName`. Those will come i
 
 #### Step 3: The Templates
 
-Let's start with the contact form template built using vanilla [Bootstrap 3](http://getbootstrap.com) _(some tags and attributes ommited for brevity)_:
+Now let's start with the contact form template _(some tags and attributes ommited for brevity)_:
 ```html
 <form id="contact-form-view">
   <h3>Contact Form View</h3>
@@ -119,7 +115,7 @@ Let's start with the contact form template built using vanilla [Bootstrap 3](htt
 
 See those `rv-value` attributes on the input tags? This is a special rivets attribute that tells Rivets how it should bind data to that element. Note that in the first_name input the binding attribute is set to `rv-value="model:first_name"`. This tells Rivets that we are binding the value of the input element and that we are binding it to the first_name attribute of the model. The `:` in between the model and the attribute tells Rivets to use our Backbone adaptor we defined above.
 
-Now for the contact card view template that will be updated by our form through the model:
+Here is the contact card template that will be updated by our form via the model:
 
 ```html
 <div id="contact-view">
@@ -159,7 +155,7 @@ class ContactFormView extends Backbone.Model
 
   render: ->
     @binding = rivets.bind(@el, {model: @model})
-    @
+    return @
 
   remove: ->
     @binding.unbind()
@@ -169,7 +165,7 @@ class ContactView extends Backbone.Model
 
   render: ->
     @binding = rivets.bind(@el, {model: @model})
-    @
+    return @
 
   remove: ->
     @binding.unbind()
@@ -184,7 +180,7 @@ As you can see we're creating a `binding` property on both views in the `render`
 
 The cool thing about this, is that with very little code, we have a two way binding between our form, our model and our contact view. So all we'd have to do to save the model to the server (assuming that the form was valid) is call `model.save()`!
 
-We are re-peating ourself in the `ContactFormView` and `ContactView`'s binding code. Before we move on, let's refactor our code to be more DRY by creating a base class that includes the binding functionality.
+We are re-peating ourself in the `ContactFormView` and `ContactView`'s binding code. Before we move on, let's refactor our code to be more [DRY](http://en.wikipedia.org/wiki/Don't_repeat_yourself) by creating a base class that includes the binding functionality.
 
 ```coffeescript
 class BoundView extends Backbone.View
@@ -192,6 +188,7 @@ class BoundView extends Backbone.View
     super()
     @bindingView = rivets.bind(@el, model: @model, view: @)
     return @
+  
   remove: ->
     @bindingView.unbind()
     super()
@@ -253,7 +250,7 @@ As you can see creating custom formatters is simple. You can read more about for
 
 #### Computed Properties
 
-Take a look at the binding code for our avatar `<img>` tag.
+Take a look at the binding code for our avatar image:
 ```html
 <img rv-src="model.getGravatar < :email" rv-show="model:email"></img>
 ```
@@ -270,19 +267,13 @@ If you'd like to dive deeper I'd encourage you to checkout the [demo](http://wmd
 
 I'd love to see anything you make as well as hear your feedback on this tutorial. Feel free to reach out to me here on Github or follow me on Twitter: [@wmdmark](http://twitter.com/wmdmark).
 
+---
 
+**Appendix A: <a name="otherlibs"></a> Other Binding Libaries for Backbone**
 
-
-
-
-
-
-
-
-###<a name="otherlibs"></a> Other Binding Libaries for Backbone
-* [Backbone.stickit](http://nytimes.github.io/backbone.stickit/)
-* [Backbone.ModelBinder](https://github.com/theironcook/Backbone.ModelBinder)
-* [Knockback.js](http://kmalakoff.github.io/knockback/) (Depends on Knockout.js)
+- [Backbone.stickit](http://nytimes.github.io/backbone.stickit/)
+- [Backbone.ModelBinder](https://github.com/theironcook/Backbone.ModelBinder)
+- [Knockback.js](http://kmalakoff.github.io/knockback/) (Depends on Knockout.js)
 
 
 
