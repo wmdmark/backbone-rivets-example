@@ -1,20 +1,16 @@
-# Binding!
+# Binding with Backbone
 
 Web frameworks built around data binding are getting quite a lot of attention recently. Angular, Ember, Knockout, Meteor, React and more come with data binding baked in, and with good reason -- binding can help you create faster and more responsive interfaces while writing less code.
 
-Backbone, however, never has and likely never will ship with any sort of data binding. Backbone is agnostic about how views are rendered. Personally, I think that's a good thing. Want to use Handlebars? Fine. Plain old DOM? Also fine. Binding based views? You betcha.
+Data binding is not a new concept. This is a concept that's been around for over decades but is just now becoming a pattern on the web. Backbone, however, never has and likely never will ship with any sort of data binding built in. Backbone is agnostic about how views are rendered. Personally, I think this is a good thing. Want to use Handlebars to render your views? Fine. Plain old DOM? Also fine. Binding based views? You betcha.
 
-## Binding with Backbone
+## Getting started
 
-There are many different libraries[*](#otherlibs) for binding views in Backbone. My personal favorite is [Rivets](rivetsjs.com).
+There are many different libraries[*](#otherlibs) for binding views in Backbone. My personal favorite is [Rivets](rivetsjs.com). Rivets + Backbone has helped me solve some of the most common pain points in web development rather elegantly. 
 
-Rivets + Backbone has helped me solve some of the most common pain points in web development rather elegantly. 
+In this tutorial, we will go over a brief intro to data binding and then dive  into a practical example of data binding in Backbone with Rivets.
 
-In this tutorial, we'll go over a brief intro to data binding and then dive  into a practical example of data binding in Backbone with Rivets.
-
-## Starting from the top
-
-Data binding is not a new concept. This is a concept that's been around for over decades but is just now becoming a pattern on the web. Before we get into the weeds, let's review what data binding is and what it's good for. 
+Before we get into the weeds, let's review what data binding is and what it's good for. 
 
 ### What is data binding?
 * Data binding is the process that establishes a connection between the UI and the application's data models and/or business logic. 
@@ -27,31 +23,29 @@ Data binding is not a new concept. This is a concept that's been around for over
 * When you need to sync user input with your model (forms).
 * Finite-state machine driven UIs and more...
 
-### Data binding with Backbone and Rivets
+### Data binding with Rivets
 
 * Rivets is a lightweight (3.4kb) library for data binding (and basic templates) for modern web applications.
 * It's framework agnostic so it can be used in practically any web stack but it pairs particularly well with Backbone.
 * Rivets is highly configurable and can be made to support practically any kind of binding  pattern you can think up.
-* Rivets uses DOM-based binding. You tell Rivets what DOM element to bind your data to and Rivets does the rest. 
+* Rivets uses DOM-based binding. You tell Rivets what DOM elements should bind to and Rivets does the rest.
 
 
-## Backbone.js + Rivet.js + Forms = Crazy Delicious
+## Backbone.js + Rivet.js = Crazy Delicious
 
-One of the biggest pain-points in modern web development is working with `<forms>`. There are a plenty of libraries for working with validation and rendering of forms both the client and the server but in my experience they continue to be the most time consuming part of any project. This is an area where data binding (two-way specifically) can make your life easier.
+One of the biggest pain-points in modern web development is working with `<forms>`. There are a plenty of libraries for working with validation and rendering of forms both the client and the server but in my experience they are consistently the most time consuming part of any project. This is an area where data binding, two-way specifically, can make your life easier.
 
-As an example, let's work with a form that modifies the contact model and also show the same contact model in other views. We'll be walking through pieces of this example and explaining how Rivets is being used in our views/templates.
+As an example, let's work with a form that modifies a contact model and also show the same contact model in other views. We'll be walking through pieces of this example and explaining how Rivets is being used to accomplish our goals.
 
-* The full demo for our example is here: [Backbone Rivets Demo](http://wmdmark.github.io/backbone-rivets-example/)
-
-* The full code for the above demo can be found here: [Demo Code](https://github.com/wmdmark/backbone-rivets-example/blob/master/app/example.coffee)
+Take a minute to look at demo here: [Backbone Rivets Contact Demo](http://wmdmark.github.io/backbone-rivets-example/)
 
 I won't be covering all of the code in the demo but I will cover all the key points. The source for the demo is commented throughout if you would like to dive deeper after the tutorial.
 
-_All the code examples in this tutorial are written in [CoffeeScript](http://coffeescript.org/) but you can apply these same code patterns in JavaScript with minimal effort._
+By the way, all the code examples in this tutorial are written in [CoffeeScript](http://coffeescript.org/) for brevity and readability. The same code patterns can of course also be applied in plain old JavaScript.
 
 #### Step 1: The Adapter
 
-Being framework agnostic, you must tell Rivets how to update and read data from your models as things are changed. This is done through a simple adaptor.Adaptors tell Rivets how to watch for changes and apply updates to your model.
+Being framework agnostic, you must tell Rivets how to update and read data from your models as things are changed. This is done through a simple adaptor. Adaptors tell Rivets how to watch for changes and apply updates to your model.
 
 Here's the code for a simple Backbone Rivets adaptor:
 
@@ -79,7 +73,7 @@ For this example, I've created a simple Backbone model that represents a contact
 ```coffeescript
 class ContactModel extends Backbone.Model
 
-  defaults:->
+  defaults: ->
     first_name: ""
     last_name: ""
     short_bio: ""
@@ -95,11 +89,16 @@ class ContactModel extends Backbone.Model
     "#{@get('first_name')} #{@get('last_name')}"
 ```
 
-Note the two helper functions `getGravatar` and `getFullName`. Those will come into play later in our templates.
+Note the two helper functions `getGravatar` and `getFullName`. Those will come into play later in our view templates.
 
 #### Step 3: The Templates
 
-Now let's start with the contact form template _(some tags and attributes ommited for brevity)_:
+Now let's start with the contact form view:
+
+![](https://s3.amazonaws.com/wmdmark/contact-form-view.png)
+
+And here's the markup _(some tags and attributes ommited for brevity)_:
+
 ```html
 <form id="contact-form-view">
   <h3>Contact Form View</h3>
@@ -115,7 +114,11 @@ Now let's start with the contact form template _(some tags and attributes ommite
 
 See those `rv-value` attributes on the input tags? This is a special rivets attribute that tells Rivets how it should bind data to that element. Note that in the first_name input the binding attribute is set to `rv-value="model:first_name"`. This tells Rivets that we are binding the value of the input element and that we are binding it to the first_name attribute of the model. The `:` in between the model and the attribute tells Rivets to use our Backbone adaptor we defined above.
 
-Here is the contact card template that will be updated by our form via the model:
+Here is the contact card view that will be updated by our form via the model:
+
+![](https://s3.amazonaws.com/wmdmark/contact-view.png)
+
+And the markup:
 
 ```html
 <div id="contact-view">
@@ -145,7 +148,7 @@ Here is the contact card template that will be updated by our form via the model
 ```
 This view demonstrates a few interesting features beyond basic binding that we will review a little later.
 
-#### Step 4: The Views
+#### Step 4: The Backbone Views
 
 Next let's create the Backbone Views to apply the bindings to our templates.
 
