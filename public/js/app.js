@@ -93,7 +93,6 @@
 require.register("example", function(exports, require, module) {
 "The Rivets adaptor for Backbone models. \nSee docs on adaptors here: http://www.rivetsjs.com/docs/#adapters\nThis is a very simple Backbone adaptor. \nFor more advanced binding check out: \nhttps://github.com/azproduction/rivets-backbone-adapter";
 var BoundView, ContactFormView, ContactModel, ContactView, ModelJSONView, sampleData, _ref, _ref1, _ref2, _ref3, _ref4,
-  __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -118,12 +117,9 @@ ContactModel = (function(_super) {
   __extends(ContactModel, _super);
 
   function ContactModel() {
-    this.hasLinks = __bind(this.hasLinks, this);
     _ref = ContactModel.__super__.constructor.apply(this, arguments);
     return _ref;
   }
-
-  ContactModel.prototype.url = "contacts/";
 
   ContactModel.prototype.defaults = function() {
     return {
@@ -145,12 +141,6 @@ ContactModel = (function(_super) {
 
   ContactModel.prototype.getFullName = function() {
     return "" + (this.get('first_name')) + " " + (this.get('last_name'));
-  };
-
-  ContactModel.prototype.hasLinks = function() {
-    var vs;
-    vs = _.uniq(_.values(this.get("links")));
-    return !(vs.length === 1 && vs[0] === "");
   };
 
   return ContactModel;
@@ -277,7 +267,9 @@ rivets.binders['live-value'] = {
 };
 
 $(function() {
-  window.contactModel = new ContactModel();
+  var contactModel;
+  contactModel = new ContactModel();
+  contactModel.set(sampleData.michael);
   new ContactFormView({
     model: contactModel
   }).render();
