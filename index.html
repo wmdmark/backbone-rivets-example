@@ -14,25 +14,27 @@
     <header>
       <h1>Backbone.js + Rivets.js = Crazy Delicious</h1>
       <p>Three <a href="http://backbonejs.org/">Backbone.js</a> views bound to a single model and updated through <a href="http://www.rivetsjs.com/">Rivets.js</a> bindings.</p>
+      <p>Try modifying the values in the contact form below and watch the other view update live!</p>
     </header>
 
     <div class="container">
       <div class="row">
-
         <!-- ContactFormView -->
         <form id="contact-form-view" role="form" class="col-md-6">
           <h3>Contact Form View</h3>
+          <h5>(These fields update the model on key up)</h5>
           <div class="row">
             <div class="form-group col-sm-6">
-              <input type="text" class="form-control" placeholder="First name" rv-value="model:first_name">
+              <input type="text" class="form-control" placeholder="First name" rv-live-value="model:first_name">
             </div>
             <div class="form-group col-sm-6">
-              <input type="text" class="form-control" placeholder="Last name" rv-value="model:last_name">
+              <input type="text" class="form-control" placeholder="Last name" rv-live-value="model:last_name">
             </div>
           </div>
           <div class="form-group">
             <textarea class="form-control" rows="3" placeholder="Short bio" rv-live-value="model:short_bio"></textarea>
           </div>
+          <h5>(These fields update the model on change)</h5>
           <div class="form-group">
             <input type="email" class="form-control" placeholder="Email address" rv-value="model:email">
           </div>
@@ -94,7 +96,7 @@
         Written by <a href="http://twitter.com/wmdmark">@wmdmark</a> for a <a href="http://twitter.com/greenvillejs">@GreenvilleJS</a> demo. View the source and tutorial on <a href="https://github.com/wmdmark/backbone-rivets-tutorial">Github</a>. 
       </p>
     </footer>
-
+      <a href="https://github.com/wmdmark/backbone-rivets-tutorial"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://github-camo.global.ssl.fastly.net/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
 
     <!-- js assets built with Brunch -->
     <script src="js/vendor.js"></script>
