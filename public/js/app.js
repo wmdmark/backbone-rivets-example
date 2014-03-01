@@ -92,7 +92,7 @@
 })();
 require.register("example", function(exports, require, module) {
 "The Rivets adaptor for Backbone models. \nSee docs on adaptors here: http://www.rivetsjs.com/docs/#adapters\nThis is a very simple Backbone adaptor. \nFor more advanced binding check out: \nhttps://github.com/azproduction/rivets-backbone-adapter";
-var BoundView, ContactFormView, ContactModel, ContactView, ModelJSONView, sampleData, _ref, _ref1, _ref2, _ref3, _ref4,
+var BoundView, ContactFormView, ContactModel, ContactView, ModelJSONView, sampleData,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -117,8 +117,7 @@ ContactModel = (function(_super) {
   __extends(ContactModel, _super);
 
   function ContactModel() {
-    _ref = ContactModel.__super__.constructor.apply(this, arguments);
-    return _ref;
+    return ContactModel.__super__.constructor.apply(this, arguments);
   }
 
   ContactModel.prototype.defaults = function() {
@@ -153,8 +152,7 @@ BoundView = (function(_super) {
   __extends(BoundView, _super);
 
   function BoundView() {
-    _ref1 = BoundView.__super__.constructor.apply(this, arguments);
-    return _ref1;
+    return BoundView.__super__.constructor.apply(this, arguments);
   }
 
   BoundView.prototype.render = function() {
@@ -179,8 +177,7 @@ ContactFormView = (function(_super) {
   __extends(ContactFormView, _super);
 
   function ContactFormView() {
-    _ref2 = ContactFormView.__super__.constructor.apply(this, arguments);
-    return _ref2;
+    return ContactFormView.__super__.constructor.apply(this, arguments);
   }
 
   ContactFormView.prototype.el = "#contact-form-view";
@@ -193,8 +190,7 @@ ContactView = (function(_super) {
   __extends(ContactView, _super);
 
   function ContactView() {
-    _ref3 = ContactView.__super__.constructor.apply(this, arguments);
-    return _ref3;
+    return ContactView.__super__.constructor.apply(this, arguments);
   }
 
   ContactView.prototype.el = "#contact-view";
@@ -207,8 +203,7 @@ ModelJSONView = (function(_super) {
   __extends(ModelJSONView, _super);
 
   function ModelJSONView() {
-    _ref4 = ModelJSONView.__super__.constructor.apply(this, arguments);
-    return _ref4;
+    return ModelJSONView.__super__.constructor.apply(this, arguments);
   }
 
   ModelJSONView.prototype.el = "#model-json-view";
