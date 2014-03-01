@@ -16,7 +16,7 @@ The example code is built via [Brunch](http://www.brunch.io).
 ### 1) Install brunch:
 `npm install -g brunch`
 
-### 2) Install [SASS](http://sass-lang.com/install:
+### 2) Install SASS:
 `gem install sass`
 
 ### 3) Run the demo
