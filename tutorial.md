@@ -151,8 +151,8 @@ This view demonstrates a few interesting features beyond basic binding that we w
 Next, let's create the Backbone Views to apply the bindings to our templates.
 
 ```coffeescript
-class ContactFormView extends Backbone.Model
-  el: "#contact-form-view"
+class ContactFormView extends Backbone.View
+  className: "#contact-form-view"
 
   render: ->
     @binding = rivets.bind(@el, {model: @model})
@@ -161,8 +161,8 @@ class ContactFormView extends Backbone.Model
   remove: ->
     @binding.unbind()
 
-class ContactView extends Backbone.Model
-  el: "#contact-view"
+class ContactView extends Backbone.View
+  className: "#contact-view"
 
   render: ->
     @binding = rivets.bind(@el, {model: @model})
