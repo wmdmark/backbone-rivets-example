@@ -181,8 +181,6 @@ As you can see, we're creating a `binding` property on both views in the `render
 
 The cool thing about this, is that with very little code, we have a two-way binding between our form, our model and our contact view. So all we'd have to do to save the model to the server (assuming that the form was valid) is call `model.save()`!
 
-_Bonus: Make the above views more [DRY](http://en.wikipedia.org/wiki/Don't_repeat_yourself) by abstracting out the bind and unbind functionality into a base class and then extending from that. See [here](https://github.com/wmdmark/backbone-rivets-example/blob/master/app/example.coffee#L54) for how this works in the example code._
-
 ### Getting fancy
 We are repeating ourself in the `ContactFormView` and `ContactView`'s binding code. Before we move on, let's refactor our code to be more [DRY](http://en.wikipedia.org/wiki/Don't_repeat_yourself) by creating a base class that includes the binding functionality.
 
