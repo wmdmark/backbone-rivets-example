@@ -181,7 +181,7 @@ As you can see, we're creating a `binding` property on both views in the `render
 
 The cool thing about this, is that with very little code, we have a two-way binding between our form, our model and our contact view. So all we'd have to do to save the model to the server (assuming that the form was valid) is call `model.save()`!
 
-### Getting fancy
+### Making it DRY
 We are repeating ourself in the `ContactFormView` and `ContactView`'s binding code. Before we move on, let's refactor our code to be more [DRY](http://en.wikipedia.org/wiki/Don't_repeat_yourself) by creating a base class that includes the binding functionality.
 
 ```coffeescript
