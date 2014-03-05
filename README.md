@@ -1,15 +1,32 @@
-### Backbone.js + Rivets.js = Crazy Delicious
+# Backbone.js + Rivets.js = Crazy Delicious
 
-It seems that data binding is all the rage these days with modern web development stacks. Angular, Ember, Knockout and more have data binding built in at the core. 
+In this repository you'll find a full tutorial & pratical example of how you can use [Rivets.js](http://rivetsjs.com) (created by [Michael Richards](https://github.com/mikeric)) to incorperate powerful data binding patterns into [Backbone.js](http://backbonejs.org/) with minimal effort.
 
-Backbone.js tends to be less opinionated about how a view should render (or bind) and therefore doesn't have any binding built in. Personally I think this is a good thing however there are cases where binding can save you a fair amount of time and can yield more intuitive, re-usable code.
+## To get started...
+### 1) View the [demo](http://wmdmark.github.io/backbone-rivets-example/).
+### 2) Read the [tutorial](https://github.com/wmdmark/backbone-rivets-example/blob/master/tutorial.md).
+### 3) Browse the [source](https://github.com/wmdmark/backbone-rivets-example/blob/master/app/example.coffee).
 
-In this repository you'll find a tutorial & pratical example of how you can use [Rivets.js](http://rivetsjs.com) (created by [Michael Richards](https://github.com/mikeric) to implement powerful binding patterns in your Backbone views with minimal effort.
+I hope you find these examples helpful. Please let me know if you have any feedback/suggestions for improving the tutorial or example code. I can be found here on Github or [@wmdmark](http://twitter.com/wmdmark) on Twitter.
 
-* Here's an example demonstrating using Backbone.js and Rivets.js together: http://wmdmark.github.io/backbone-rivets-example/
+## To build the demo...
 
-* The code for the example is located in this repo here (CoffeeScript): https://github.com/wmdmark/backbone-rivets-example/blob/master/app/example.coffee
+The example code is built via [Brunch](http://www.brunch.io).
 
-* A tutorial describing the implementations details of this example can be found here: https://github.com/wmdmark/backbone-rivets-example/blob/master/tutorial.md
+### 1) Install brunch:
+`npm install -g brunch`
 
-I hope you find this example/tutorial helpful. Please let me know if you have any feedback/suggestions for improving the tutorial or example code. I can be found here on Github or [@wmdmark](http://twitter.com/wmdmark) on Twitter.
+### 2) Install SASS:
+`gem install sass`
+
+### 3) Run the demo
+```bash
+npm install
+brunch w -s
+```
+
+You should now be able to view the build in your broweser at: http://localhost:3333 
+
+Read more about the build commands in the [Brunch Docs](https://github.com/brunch/brunch/blob/stable/docs/commands.md)
+
+

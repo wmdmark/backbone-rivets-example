@@ -21,7 +21,7 @@
     "coffee-script-brunch": ">= 1.0 < 1.7",
 
     "css-brunch": ">= 1.0 < 1.7",
-    "sass-brunch": "latest",
+    "sass-brunch": "~1.7.0",
 
     "auto-reload-brunch": "~1.7.1",
 

@@ -109,9 +109,11 @@ rivets.binders['live-value'] =
 
 
 $ ->
-  window.contactModel = new ContactModel()
+  contactModel = new ContactModel()
+  contactModel.set(sampleData.michael)
   new ContactFormView(model: contactModel).render()
   new ContactView(model: contactModel).render()
   new ModelJSONView(watch: contactModel).render()
+
 
   
