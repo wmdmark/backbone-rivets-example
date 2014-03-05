@@ -168,7 +168,7 @@ Rivets supports a lot of different types of binding and other useful components 
 Next let's create the Backbone View to bind actually apply the bindings to the form.
 
 ```coffeescript
-class ContactFormView extends Backbone.Model
+class ContactFormView extends Backbone.View
   el: "#contact-form-view"
 
   render: ->
@@ -178,7 +178,7 @@ class ContactFormView extends Backbone.Model
   remove: ->
     @binding.unbind()
 
-class ContactView extends Backbone.Model
+class ContactView extends Backbone.View
   el: "#contact-view"
 
   render: ->
@@ -189,14 +189,16 @@ class ContactView extends Backbone.Model
     @binding.unbind()
 
 $ ->
-  model = new Backbone.Model()
-  new ContactFormView(model: model).render()
-  new ContactView(model: model).render()
+  contactModel = new ContactModel()
+  new ContactFormView(model: contactModel).render()
+  new ContactView(model: contactModel).render()
 ```
 
 As you can see we're creating a @binding property on the view in the render function by telling Rivets to bind the view's DOM node (@el) to view's model (@model). We're also unbinding the @binding property when the view is removed so that we can avoid memory leaks.
 
 The cool thing about this, is that with very little code, we have a two way binding between our form and our model. So all we'd have to do to save the model to the server (assuming that the form was valid) is call `model.save()`!
+
+___Bonus__: Make the above views more [DRY](http://en.wikipedia.org/wiki/Don't_repeat_yourself) by abstracting out the bind and unbind functionality into a base class and then extending from that. See [here](https://github.com/wmdmark/backbone-rivets-example/blob/master/app/example.coffee#L54) for how this works in the example code._
 
 ### Getting fancy
 
